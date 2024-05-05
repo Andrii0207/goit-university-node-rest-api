@@ -1,7 +1,6 @@
-import { json } from "express";
 import contactsService from "../services/contactsServices.js";
 import HttpError from "../helpers/HttpError.js"
-// import createContactSchema from "../schemas/contactsSchemas.js"
+import { createContactSchema, updateContactSchema } from "../schemas/contactsSchemas.js"
 
 
 export const getAllContacts = async (req, res, next) => {
@@ -35,26 +34,44 @@ export const deleteContact = async (req, res, next) => {
         if (!responce) {
             throw HttpError(404, "Not found")
         }
-
         res.json(responce);
+
     } catch (error) {
         next(error);
     }
 };
 
 export const createContact = async (req, res, next) => {
-    // const checkData = createContactSchema(req)
     try {
+        const { error } = createContactSchema.validate(req.body)
+        if (error) {
+            throw HttpError(400, error.message)
+        }
         const responce = await contactsService.addContact(req.body)
-        console.log("POST >", responce)
-        res.json(responce)
+        res.status(201).json(responce)
+
+    } catch (error) {
+        next(error);
+    }
+};
+
+export const updateContact = async (req, res, next) => {
+    try {
+        const { error } = updateContactSchema.validate(req.body)
+        if (error) {
+            throw HttpError(400, error.message)
+        }
+        const { id } = req.params;
+        const responce = await contactsService.updateContact(id, req.body);
+
+        if (!responce) {
+            throw HttpError(404, "Not found");
+        }
+        res.status(200).json(responce)
 
     } catch (error) {
         next(error)
     }
-
 };
-
-export const updateContact = (req, res) => { };
 
 
