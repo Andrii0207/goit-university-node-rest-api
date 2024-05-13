@@ -29,8 +29,8 @@ app.use((err, req, res, next) => {
 mongoose.connect(DB_HOST)
   .then(() => {
     app.listen(PORT, () => {
-      console.log("Database connection successful");
-      console.log(`Server is running. Use our API on port: ${PORT}`);
+      console.log("Database connection successful ✅");
+      console.log(`Server is running 🚀. Use our API on port: ${PORT}`);
     })
   })
   .catch(error => {
