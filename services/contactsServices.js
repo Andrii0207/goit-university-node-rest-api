@@ -2,9 +2,8 @@ import Contact from "../models/Contact.js"
 
 // const listContacts = () => Contact.find();
 
-function listContacts() {
-    return Contact.find();
-}
+const listContacts = () => Contact.find();
+
 
 async function getContactById(id) {
 
@@ -14,9 +13,7 @@ async function removeContact(id) {
 
 }
 
-async function addContact(data) {
-
-}
+const addContact = data => Contact.create(data);
 
 async function updateContact(id, data) {
 
