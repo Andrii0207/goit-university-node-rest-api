@@ -7,17 +7,18 @@ import {
   updateContact,
 } from "../controllers/contactsControllers.js";
 import { isEmptyBody } from "../middlewares/isEmptyBody.js"
+import { isValidId } from "../middlewares/isValidId.js"
 
 const contactsRouter = express.Router();
 
 contactsRouter.get("/", getAllContacts);
 
-contactsRouter.get("/:id", getOneContact);
+contactsRouter.get("/:id", isValidId, getOneContact);
 
-contactsRouter.delete("/:id", deleteContact);
+contactsRouter.delete("/:id", isValidId, deleteContact);
 
 contactsRouter.post("/", createContact);
 
-contactsRouter.put("/:id", isEmptyBody, updateContact);
+contactsRouter.put("/:id", isValidId, isEmptyBody, updateContact);
 
 export default contactsRouter;

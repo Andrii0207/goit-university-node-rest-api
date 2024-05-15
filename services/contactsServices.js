@@ -1,23 +1,18 @@
 import Contact from "../models/Contact.js"
 
-// const listContacts = () => Contact.find();
 
-const listContacts = () => Contact.find();
+const listContacts = (search = {}) => {
+    const { filter = {}, fields = "" } = search;
+    return Contact.find(filter, fields)
+};
 
+const getContactById = _id => Contact.findById(_id)
 
-async function getContactById(id) {
-
-}
-
-async function removeContact(id) {
-
-}
+const removeContact = id => Contact.findByIdAndDelete(id)
 
 const addContact = data => Contact.create(data);
 
-async function updateContact(id, data) {
-
-}
+const updateContact = (id, data) => Contact.findByIdAndUpdate(id, data)
 
 export default {
     listContacts,
@@ -25,4 +20,4 @@ export default {
     removeContact,
     addContact,
     updateContact
-}
+} 
